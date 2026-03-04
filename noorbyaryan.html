@@ -1,0 +1,1703 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Noor - NOOR BY ARYAN</title>
+<link href="https://fonts.googleapis.com/css2?family=Scheherazade+New:wght@400;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0c0f;
+    --bg2: #0f1218;
+    --bg3: #141920;
+    --card: #161d26;
+    --border: rgba(196,166,106,0.18);
+    --gold: #c4a66a;
+    --gold2: #e8c97a;
+    --gold-glow: rgba(196,166,106,0.15);
+    --text: #e8dfc8;
+    --text2: #9a8f78;
+    --text3: #6b6355;
+    --green: #4a8c6a;
+    --green2: #5daa82;
+    --arabic: 'Scheherazade New', serif;
+    --body: 'Cormorant Garamond', serif;
+    --display: 'Cinzel', serif;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--body);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background pattern */
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(196,166,106,0.08) 0%, transparent 60%),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c4a66a' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events:none;
+    z-index:0;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top:0; left:0; right:0;
+    z-index: 100;
+    background: rgba(10,12,15,0.95);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(12px);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 64px;
+  }
+
+  .nav-logo {
+    font-family: var(--display);
+    font-size: 1.4rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .nav-logo span { font-family: var(--arabic); font-size:1.6rem; color: var(--gold2); }
+
+  nav ul {
+    display: flex;
+    gap: 4px;
+    list-style: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex-shrink: 1;
+    min-width: 0;
+    max-width: calc(100% - 120px);
+  }
+
+  nav ul::-webkit-scrollbar { display: none; }
+
+  nav ul li { flex-shrink: 0; }
+
+  nav ul li button {
+    background: none;
+    border: none;
+    color: var(--text2);
+    font-family: var(--display);
+    font-size: 0.72rem;
+    letter-spacing: 0.12em;
+    padding: 8px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  nav ul li button:hover, nav ul li button.active {
+    color: var(--gold);
+    background: var(--gold-glow);
+  }
+
+  /* MAIN */
+  main {
+    padding-top: 64px;
+    position: relative;
+    z-index:1;
+  }
+
+  .page { display: none !important; min-height: calc(100vh - 64px); }
+  .page.active { display: block !important; }
+  #quran.active { display: flex !important; flex-direction: column; }
+
+  /* ===== HOME ===== */
+  #home {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    text-align: center;
+    min-height: calc(100vh - 64px);
+  }
+  #home.active { display: flex !important; }
+
+  .bismillah {
+    font-family: var(--arabic);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    color: var(--gold2);
+    text-shadow: 0 0 40px rgba(196,166,106,0.4);
+    margin-bottom: 12px;
+    animation: fadeDown 1s ease both;
+  }
+
+  .bismillah-trans {
+    font-family: var(--body);
+    font-style: italic;
+    color: var(--text2);
+    font-size: 1.1rem;
+    margin-bottom: 60px;
+    animation: fadeDown 1s 0.2s ease both;
+  }
+
+  @keyframes fadeDown {
+    from { opacity:0; transform: translateY(-20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    max-width: 900px;
+    width: 100%;
+    animation: fadeUp 1s 0.4s ease both;
+  }
+
+  @keyframes fadeUp {
+    from { opacity:0; transform: translateY(20px); }
+    to { opacity:1; transform: translateY(0); }
+  }
+
+  .home-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 32px 24px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .home-card::before {
+    content:'';
+    position:absolute;
+    inset:0;
+    background: radial-gradient(ellipse at top, var(--gold-glow), transparent 70%);
+    opacity:0;
+    transition: opacity 0.3s;
+  }
+
+  .home-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+  .home-card:hover::before { opacity:1; }
+
+  .home-card .icon { font-size: 2.4rem; margin-bottom: 16px; }
+  .home-card h3 { font-family: var(--display); font-size:1rem; letter-spacing:0.1em; color: var(--gold); margin-bottom:8px; }
+  .home-card p { font-size: 0.9rem; color: var(--text2); font-style: italic; }
+
+  /* date/time display */
+  .home-datetime {
+    margin-bottom: 48px;
+    animation: fadeDown 1s 0.1s ease both;
+  }
+  .home-datetime .time { font-family: var(--display); font-size: 3rem; color: var(--text); letter-spacing: 0.1em; }
+  .home-datetime .date { font-family: var(--body); color: var(--text2); font-size: 1rem; margin-top: 4px; }
+  .home-datetime .hijri { font-family: var(--arabic); color: var(--gold); font-size: 1.3rem; margin-top: 2px; }
+
+  /* ===== PRAYER TIMES ===== */
+  #prayer { padding: 40px 24px; max-width: 700px; margin: 0 auto; }
+
+  .page-header {
+    text-align:center;
+    margin-bottom: 40px;
+  }
+
+  .page-header h2 {
+    font-family: var(--display);
+    font-size: 1.8rem;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .page-header p { color: var(--text2); font-style:italic; }
+
+  .location-bar {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+  }
+
+  .location-bar input {
+    flex:1; min-width:160px;
+    background: none;
+    border: none;
+    color: var(--text);
+    font-family: var(--body);
+    font-size: 1rem;
+    outline: none;
+  }
+
+  .location-bar input::placeholder { color: var(--text3); }
+
+  .btn-gold {
+    background: linear-gradient(135deg, var(--gold), var(--gold2));
+    color: #1a1200;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-family: var(--display);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+    font-weight: 600;
+  }
+
+  .btn-gold:hover { transform: scale(1.04); box-shadow: 0 4px 20px rgba(196,166,106,0.3); }
+
+  .prayer-cards { display: flex; flex-direction:column; gap: 12px; }
+
+  .prayer-item {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: all 0.25s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .prayer-item.current {
+    border-color: var(--gold);
+    background: linear-gradient(135deg, rgba(196,166,106,0.1), var(--card));
+  }
+
+  .prayer-item.current::after {
+    content: 'Current';
+    position: absolute;
+    top: 8px; right: 12px;
+    font-family: var(--display);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--gold2);
+    text-transform: uppercase;
+  }
+
+  .prayer-name { font-family: var(--display); letter-spacing: 0.08em; font-size:1.1rem; }
+  .prayer-arabic { font-family: var(--arabic); color: var(--gold); font-size: 1.3rem; }
+  .prayer-time { font-family: var(--display); font-size: 1.4rem; color: var(--gold2); letter-spacing: 0.1em; }
+
+  /* ===== QURAN ===== */
+  #quran { padding: 20px 0; max-width: 900px; margin: 0 auto; height: calc(100vh - 64px); flex-direction: column; }
+  #quran .page-header { padding: 0 24px; flex-shrink: 0; }
+
+  /* Desktop: side-by-side */
+  .quran-layout {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: 20px;
+    flex: 1;
+    min-height: 0;
+    padding: 0 24px;
+  }
+
+  .surah-list-panel {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .surah-search {
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+
+  .surah-search input {
+    width: 100%;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 8px 14px;
+    color: var(--text);
+    font-family: var(--body);
+    outline: none;
+    font-size: 0.95rem;
+  }
+
+  .surah-list {
+    overflow-y: auto;
+    flex: 1;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  .surah-list-item {
+    padding: 12px 16px;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(196,166,106,0.06);
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .surah-list-item:hover, .surah-list-item.active {
+    background: var(--gold-glow);
+  }
+
+  .surah-num {
+    width: 28px; height: 28px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    display: flex; align-items:center; justify-content:center;
+    font-family: var(--display);
+    font-size: 0.65rem;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .surah-info { flex:1; min-width:0; }
+  .surah-info .name-en { font-family: var(--display); font-size:0.8rem; letter-spacing:0.05em; color: var(--text); }
+  .surah-info .name-ar { font-family: var(--arabic); font-size:1.1rem; color: var(--gold); text-align:right; }
+  .surah-info .meta { font-size:0.7rem; color: var(--text3); }
+
+  .quran-reader {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    overflow-y: auto;
+    min-height: 0;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+
+  /* Mobile: full-screen panels that slide */
+  @media(max-width: 700px) {
+    #quran { padding: 0; height: calc(100vh - 64px); position: relative; overflow: hidden; flex-direction: column; }
+    #quran .page-header { display: none; }
+
+    .quran-layout {
+      display: block;
+      padding: 0;
+      height: 100%;
+      position: relative;
+    }
+
+    .surah-list-panel {
+      position: absolute;
+      inset: 0;
+      border-radius: 0;
+      border: none;
+      max-height: 100%;
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      z-index: 2;
+    }
+
+    .surah-list-panel.slide-out {
+      transform: translateX(-100%);
+    }
+
+    .quran-reader {
+      position: absolute;
+      inset: 0;
+      border-radius: 0;
+      border: none;
+      padding: 16px;
+      transform: translateX(100%);
+      transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      z-index: 1;
+    }
+
+    .quran-reader.slide-in {
+      transform: translateX(0);
+      z-index: 3;
+    }
+
+    .mobile-back-btn {
+      display: flex !important;
+    }
+  }
+
+  .mobile-back-btn {
+    display: none;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--bg2);
+    cursor: pointer;
+    flex-shrink: 0;
+    font-family: var(--display);
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: var(--gold);
+    text-transform: uppercase;
+  }
+
+  .surah-header {
+    text-align: center;
+    margin-bottom: 28px;
+    padding-bottom: 24px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .surah-header .ar-title { font-family: var(--arabic); font-size: 2.8rem; color: var(--gold2); }
+  .surah-header .en-title { font-family: var(--display); font-size: 1.2rem; color: var(--text); letter-spacing: 0.12em; margin-top: 6px; }
+  .surah-header .surah-meta { color: var(--text2); font-size: 0.85rem; font-style: italic; margin-top: 4px; }
+
+  .bismillah-reader {
+    text-align: center;
+    font-family: var(--arabic);
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .ayah {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(196,166,106,0.07);
+  }
+
+  .ayah-arabic {
+    font-family: var(--arabic);
+    font-size: 1.8rem;
+    line-height: 2;
+    text-align: right;
+    color: var(--text);
+    direction: rtl;
+    margin-bottom: 8px;
+  }
+
+  .ayah-translation {
+    font-family: var(--body);
+    font-size: 0.95rem;
+    color: var(--text2);
+    line-height: 1.7;
+    font-style: italic;
+  }
+
+  .ayah-num {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px; height: 28px;
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    font-family: var(--display);
+    font-size: 0.65rem;
+    color: var(--gold);
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+
+  /* ===== QIBLA ===== */
+  #qibla { padding: 40px 24px; max-width: 500px; margin: 0 auto; text-align: center; }
+
+  .qibla-compass {
+    position: relative;
+    width: 280px; height: 280px;
+    margin: 40px auto;
+  }
+
+  .compass-ring {
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: radial-gradient(circle, var(--card), var(--bg2));
+    position: relative;
+    box-shadow: 0 0 40px rgba(196,166,106,0.1), inset 0 0 40px rgba(0,0,0,0.5);
+  }
+
+  .compass-ring::before {
+    content:'';
+    position: absolute;
+    inset: 8px;
+    border-radius: 50%;
+    border: 1px solid rgba(196,166,106,0.1);
+  }
+
+  .compass-dirs span {
+    position: absolute;
+    font-family: var(--display);
+    font-size: 0.75rem;
+    color: var(--text2);
+    letter-spacing: 0.1em;
+  }
+
+  .compass-dirs .n { top:10px; left:50%; transform:translateX(-50%); color: var(--gold); }
+  .compass-dirs .s { bottom:10px; left:50%; transform:translateX(-50%); }
+  .compass-dirs .e { right:10px; top:50%; transform:translateY(-50%); }
+  .compass-dirs .w { left:10px; top:50%; transform:translateY(-50%); }
+
+  .qibla-needle {
+    position: absolute;
+    top: 50%; left: 50%;
+    width: 4px; height: 100px;
+    margin-left: -2px; margin-top: -90px;
+    transform-origin: bottom center;
+    transition: transform 0.5s ease;
+  }
+
+  .needle-up { width:4px; height:80px; background: linear-gradient(to top, transparent, var(--gold2)); border-radius: 4px; position:absolute; bottom:0; left:0; }
+  .needle-down { width:4px; height:20px; background: var(--text3); border-radius: 4px; position:absolute; top:0; left:0; }
+
+  .qibla-center {
+    position: absolute;
+    top:50%; left:50%;
+    transform: translate(-50%,-50%);
+    width: 14px; height: 14px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 12px var(--gold);
+  }
+
+  .qibla-kaaba {
+    font-family: var(--arabic);
+    font-size: 2rem;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .qibla-info { color: var(--text2); font-style: italic; margin-bottom: 24px; }
+  .qibla-degree { font-family: var(--display); font-size: 2.5rem; color: var(--gold2); margin: 16px 0; }
+
+  /* ===== DHIKR ===== */
+  #dhikr { padding: 40px 24px; max-width: 600px; margin: 0 auto; text-align: center; }
+
+  .dhikr-selector {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+
+  .dhikr-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 8px 18px;
+    color: var(--text2);
+    font-family: var(--body);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .dhikr-btn:hover, .dhikr-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-glow);
+  }
+
+  .dhikr-display {
+    margin: 20px 0 32px;
+  }
+
+  .dhikr-arabic-main {
+    font-family: var(--arabic);
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    color: var(--gold2);
+    text-shadow: 0 0 30px rgba(196,166,106,0.3);
+    margin-bottom: 8px;
+    direction: rtl;
+  }
+
+  .dhikr-meaning { color: var(--text2); font-style: italic; font-size: 1rem; margin-bottom: 4px; }
+  .dhikr-transliteration { color: var(--text3); font-size: 0.85rem; }
+
+  .counter-circle {
+    width: 180px; height: 180px;
+    border-radius: 50%;
+    border: 3px solid var(--border);
+    background: radial-gradient(circle, var(--card), var(--bg2));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 24px;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: 0 0 0 0 rgba(196,166,106,0);
+    position: relative;
+    user-select: none;
+  }
+
+  .counter-circle:active {
+    transform: scale(0.96);
+    box-shadow: 0 0 30px rgba(196,166,106,0.25);
+    border-color: var(--gold);
+  }
+
+  .counter-circle .count {
+    font-family: var(--display);
+    font-size: 3.5rem;
+    color: var(--gold2);
+    line-height:1;
+  }
+
+  .counter-circle .target { font-family: var(--body); font-size: 0.85rem; color: var(--text3); margin-top: 4px; }
+
+  .counter-progress {
+    position: absolute;
+    inset: -3px;
+    border-radius: 50%;
+  }
+
+  .dhikr-controls { display: flex; gap: 12px; justify-content: center; }
+
+  .btn-outline {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text2);
+    padding: 10px 22px;
+    border-radius: 8px;
+    font-family: var(--display);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s;
+  }
+
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); }
+
+  .sessions-info { margin-top: 20px; color: var(--text3); font-size: 0.85rem; }
+  .sessions-info span { color: var(--gold); font-family: var(--display); }
+
+  /* ===== DUAS ===== */
+  #duas { padding: 40px 24px; max-width: 800px; margin: 0 auto; }
+
+  .duas-categories {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+
+  .cat-btn {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    padding: 7px 16px;
+    color: var(--text2);
+    font-family: var(--display);
+    font-size: 0.7rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .cat-btn:hover, .cat-btn.active {
+    border-color: var(--gold);
+    color: var(--gold);
+    background: var(--gold-glow);
+  }
+
+  .dua-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px;
+    margin-bottom: 16px;
+    transition: border-color 0.25s;
+  }
+
+  .dua-card:hover { border-color: rgba(196,166,106,0.35); }
+
+  .dua-title { font-family: var(--display); font-size: 0.85rem; letter-spacing: 0.1em; color: var(--gold); text-transform: uppercase; margin-bottom: 16px; }
+  .dua-arabic { font-family: var(--arabic); font-size: 1.7rem; direction: rtl; text-align: right; line-height: 1.9; color: var(--text); margin-bottom: 12px; }
+  .dua-trans { font-family: var(--body); font-style: italic; color: var(--text2); line-height: 1.7; margin-bottom: 8px; }
+  .dua-source { font-size: 0.75rem; color: var(--text3); }
+
+  .loading-spinner {
+    text-align:center;
+    padding: 60px;
+    color: var(--text2);
+    font-style: italic;
+  }
+
+  .loading-spinner::after {
+    content: '';
+    display: block;
+    width: 32px; height: 32px;
+    border: 2px solid var(--border);
+    border-top-color: var(--gold);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+    margin: 16px auto 0;
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .error-msg {
+    text-align:center;
+    padding: 32px;
+    color: var(--text2);
+    font-style: italic;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+  }
+
+  /* Scrollbar */
+  ::-webkit-scrollbar { width: 5px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+  .fade-in { animation: fadeUp 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo"><span>نور</span> NOOR</div>
+  <ul>
+    <li><button onclick="showPage('home')" class="active" id="nav-home">Home</button></li>
+    <li><button onclick="showPage('prayer')" id="nav-prayer">Prayer</button></li>
+    <li><button onclick="showPage('quran')" id="nav-quran">Quran</button></li>
+    <li><button onclick="showPage('qibla')" id="nav-qibla">Qibla</button></li>
+    <li><button onclick="showPage('dhikr')" id="nav-dhikr">Dhikr</button></li>
+    <li><button onclick="showPage('duas')" id="nav-duas">Duas</button></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HOME -->
+<section class="page active" id="home">
+  <div class="home-datetime">
+    <div class="time" id="clock">--:--</div>
+    <div class="date" id="greg-date"></div>
+    <div class="hijri" id="hijri-date"></div>
+  </div>
+  <div class="bismillah">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>
+  <div class="bismillah-trans">In the name of Allah, the Most Gracious, the Most Merciful</div>
+  <div class="home-grid">
+    <div class="home-card" onclick="showPage('prayer')">
+      <div class="icon">🕌</div>
+      <h3>Prayer Times</h3>
+      <p>Daily salah schedule for your location</p>
+    </div>
+    <div class="home-card" onclick="showPage('quran')">
+      <div class="icon">📖</div>
+      <h3>Holy Quran</h3>
+      <p>All 114 surahs with translation</p>
+    </div>
+    <div class="home-card" onclick="showPage('qibla')">
+      <div class="icon">🧭</div>
+      <h3>Qibla Direction</h3>
+      <p>Find the direction of the Kaaba</p>
+    </div>
+    <div class="home-card" onclick="showPage('dhikr')">
+      <div class="icon">📿</div>
+      <h3>Dhikr Counter</h3>
+      <p>Track your remembrance of Allah</p>
+    </div>
+    <div class="home-card" onclick="showPage('duas')">
+      <div class="icon">🤲</div>
+      <h3>Duas</h3>
+      <p>Authentic supplications for daily life</p>
+    </div>
+  </div>
+</section>
+
+<!-- PRAYER TIMES -->
+<section class="page" id="prayer">
+  <div class="page-header">
+    <h2>Prayer Times</h2>
+    <p>Salah — The Second Pillar of Islam</p>
+  </div>
+  <div style="max-width:700px;margin:0 auto;padding:0 24px;">
+    <div class="location-bar">
+      <span style="color:var(--gold)">📍</span>
+      <input type="text" id="city-input" placeholder="Enter city name (e.g. Mecca, London, New York)" />
+      <button class="btn-gold" onclick="fetchPrayerTimes()">Get Times</button>
+      <button class="btn-outline" onclick="getLocationPrayer()" style="font-size:0.7rem;">Use My Location</button>
+    </div>
+    <div id="prayer-cards">
+      <div class="error-msg">Enter your city or use your location to see prayer times.</div>
+    </div>
+  </div>
+</section>
+
+<!-- QURAN -->
+<section class="page" id="quran">
+  <div class="page-header">
+    <h2>The Holy Quran</h2>
+    <p>The word of Allah — 114 Surahs, 6236 Ayahs</p>
+  </div>
+  <div class="quran-layout">
+    <!-- Surah List Panel -->
+    <div class="surah-list-panel" id="surah-list-panel">
+      <div class="surah-search">
+        <div style="display:flex;align-items:center;gap:8px;">
+          <span style="font-family:var(--arabic);font-size:1.2rem;color:var(--gold);">القرآن</span>
+          <input type="text" id="surah-search" placeholder="Search surah by name or number..." oninput="filterSurahs(this.value)" style="flex:1;" />
+        </div>
+      </div>
+      <div class="surah-list" id="surah-list">
+        <div class="loading-spinner">Loading surahs</div>
+      </div>
+    </div>
+    <!-- Reader Panel -->
+    <div class="quran-reader" id="quran-reader">
+      <!-- Mobile back button -->
+      <div class="mobile-back-btn" onclick="quranGoBack()">
+        <span style="font-size:1rem;">←</span> All Surahs
+      </div>
+      <div id="quran-reader-content" style="padding-top:8px;">
+        <div style="text-align:center; padding:60px 20px; color:var(--text2); font-style:italic;">
+          <div style="font-family:var(--arabic);font-size:3rem;color:var(--gold);margin-bottom:16px;">القرآن الكريم</div>
+          Select a surah from the list to begin reading
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QIBLA -->
+<section class="page" id="qibla">
+  <div class="page-header">
+    <h2>Qibla Direction</h2>
+    <p>Point your camera around — find the Kaaba</p>
+  </div>
+
+  <!-- START SCREEN -->
+  <div id="qibla-start" style="text-align:center;padding:20px 24px;">
+    <div style="font-size:4rem;margin-bottom:16px;">🕋</div>
+    <p style="color:var(--text2);font-style:italic;margin-bottom:28px;font-size:1rem;">
+      This uses your camera & compass to show you exactly where Mecca is in real life. Just pan your phone around!
+    </p>
+    <button class="btn-gold" onclick="startQiblaAR()" style="font-size:1rem;padding:14px 32px;">
+      📷 Open Camera Qibla Finder
+    </button>
+    <p style="color:var(--text3);font-size:0.8rem;margin-top:16px;font-style:italic;">Requires camera + location + device orientation access</p>
+  </div>
+
+  <!-- AR VIEW -->
+  <div id="qibla-ar" style="display:none;position:relative;width:100%;max-width:500px;margin:0 auto;">
+    <video id="qibla-video" autoplay playsinline muted
+      style="width:100%;border-radius:16px;display:block;background:#000;max-height:60vh;object-fit:cover;"></video>
+
+    <!-- Overlay canvas for Kaaba symbol -->
+    <canvas id="qibla-canvas"
+      style="position:absolute;top:0;left:0;width:100%;height:100%;border-radius:16px;pointer-events:none;"></canvas>
+
+    <!-- HUD -->
+    <div style="position:absolute;top:12px;left:0;right:0;text-align:center;pointer-events:none;">
+      <div id="ar-hud-text" style="
+        display:inline-block;
+        background:rgba(10,12,15,0.75);
+        border:1px solid rgba(196,166,106,0.4);
+        border-radius:100px;
+        padding:6px 18px;
+        font-family:var(--display);
+        font-size:0.75rem;
+        letter-spacing:0.08em;
+        color:var(--gold2);
+        backdrop-filter:blur(8px);
+      ">Detecting...</div>
+    </div>
+
+    <!-- Degree badge -->
+    <div style="position:absolute;bottom:16px;left:0;right:0;text-align:center;pointer-events:none;">
+      <div id="ar-degree-badge" style="
+        display:inline-block;
+        background:rgba(10,12,15,0.8);
+        border:1px solid rgba(196,166,106,0.3);
+        border-radius:12px;
+        padding:8px 20px;
+        backdrop-filter:blur(10px);
+      ">
+        <span style="font-family:var(--arabic);font-size:1.2rem;color:var(--gold2);">القبلة</span>
+        <span id="ar-degree-val" style="font-family:var(--display);font-size:1.1rem;color:var(--text);margin-left:10px;">—°</span>
+      </div>
+    </div>
+
+    <!-- Close button -->
+    <button onclick="stopQiblaAR()" style="
+      position:absolute;top:12px;right:12px;
+      background:rgba(10,12,15,0.8);
+      border:1px solid rgba(196,166,106,0.3);
+      color:var(--gold);
+      border-radius:50%;
+      width:36px;height:36px;
+      font-size:1rem;
+      cursor:pointer;
+      backdrop-filter:blur(8px);
+    ">✕</button>
+  </div>
+
+  <div id="qibla-error" style="display:none;text-align:center;padding:20px;color:var(--text2);font-style:italic;"></div>
+</section>
+
+<!-- DHIKR -->
+<section class="page" id="dhikr">
+  <div class="page-header">
+    <h2>Dhikr Counter</h2>
+    <p>Remember Allah abundantly</p>
+  </div>
+  <div class="dhikr-selector" id="dhikr-selector"></div>
+  <div class="dhikr-display">
+    <div class="dhikr-arabic-main" id="dhikr-arabic">سُبْحَانَ اللَّهِ</div>
+    <div class="dhikr-meaning" id="dhikr-meaning">Glory be to Allah</div>
+    <div class="dhikr-transliteration" id="dhikr-translit">Subhanallah</div>
+  </div>
+  <div class="counter-circle" onclick="incrementDhikr()" id="counter-circle">
+    <svg class="counter-progress" id="progress-svg" viewBox="0 0 186 186">
+      <circle cx="93" cy="93" r="90" fill="none" stroke="rgba(196,166,106,0.1)" stroke-width="3"/>
+      <circle cx="93" cy="93" r="90" fill="none" stroke="var(--gold)" stroke-width="3"
+        stroke-dasharray="565" stroke-dashoffset="565" id="progress-circle"
+        stroke-linecap="round" transform="rotate(-90 93 93)" style="transition:stroke-dashoffset 0.3s"/>
+    </svg>
+    <div class="count" id="dhikr-count">0</div>
+    <div class="target" id="dhikr-target">Tap to count</div>
+  </div>
+  <div class="dhikr-controls">
+    <button class="btn-outline" onclick="resetDhikr()">Reset</button>
+    <button class="btn-outline" onclick="setTarget()">Set Target</button>
+  </div>
+  <div class="sessions-info">Total today: <span id="total-today">0</span> dhikr</div>
+</section>
+
+<!-- DUAS -->
+<section class="page" id="duas">
+  <div class="page-header">
+    <h2>Daily Duas</h2>
+    <p>Authentic supplications from Quran & Sunnah</p>
+  </div>
+  <div class="duas-categories" id="duas-cats"></div>
+  <div id="duas-list"></div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer style="
+  text-align:center;
+  padding:28px 24px;
+  border-top:1px solid rgba(196,166,106,0.1);
+  margin-top:40px;
+  position:relative;
+  z-index:1;
+">
+  <div style="font-family:var(--arabic);font-size:1.3rem;color:var(--gold);margin-bottom:6px;">بِسْمِ اللَّهِ</div>
+  <div style="font-family:var(--body);font-style:italic;color:var(--text3);font-size:0.9rem;">
+    Created with <span style="color:#e05555;">♥</span> love by
+    <span style="font-family:var(--display);color:var(--gold2);letter-spacing:0.08em;font-size:0.95rem;"> Aryan Iqbal</span>
+  </div>
+</footer>
+
+<script>
+// ===================== STATE =====================
+let currentPage = 'home';
+let surahs = [];
+let allSurahs = [];
+let currentSurah = null;
+let dhikrCount = 0;
+let dhikrTarget = 33;
+let dhikrSessions = 0;
+let totalToday = 0;
+let currentDhikrIdx = 0;
+
+// ===================== NAV =====================
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.getElementById('nav-'+id).classList.add('active');
+  currentPage = id;
+
+  if (currentPage !== 'qibla' && qiblaStream) stopQiblaAR();
+  if (id === 'quran' && allSurahs.length === 0) loadSurahList();
+  if (id === 'dhikr') renderDhikr();
+  if (id === 'duas') renderDuas();
+}
+
+// ===================== CLOCK =====================
+function updateClock() {
+  const now = new Date();
+  document.getElementById('clock').textContent =
+    now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
+  document.getElementById('greg-date').textContent =
+    now.toLocaleDateString('en-US', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+  // Approximate Hijri conversion
+  const hijri = gregorianToHijri(now.getFullYear(), now.getMonth()+1, now.getDate());
+  const hijriMonths = ['Muharram','Safar','Rabi I','Rabi II','Jumada I','Jumada II','Rajab','Sha\'ban','Ramadan','Shawwal','Dhu al-Qi\'dah','Dhu al-Hijjah'];
+  document.getElementById('hijri-date').textContent =
+    `${hijri.day} ${hijriMonths[hijri.month-1]} ${hijri.year} AH`;
+}
+
+function gregorianToHijri(year, month, day) {
+  let jd = Math.floor((14 - month)/12);
+  let y = year + 4800 - jd;
+  let m = month + 12*jd - 3;
+  let jdn = day + Math.floor((153*m+2)/5) + 365*y + Math.floor(y/4) - Math.floor(y/100) + Math.floor(y/400) - 32045;
+  let l = jdn - 1948440 + 10632;
+  let n = Math.floor((l-1)/10631);
+  l = l - 10631*n + 354;
+  let j = Math.floor((10985-l)/5316)*Math.floor((50*l)/17719) + Math.floor(l/5670)*Math.floor((43*l)/15238);
+  l = l - Math.floor((30-j)/15)*Math.floor((17719*j)/50) - Math.floor(j/16)*Math.floor((15238*j)/43) + 29;
+  let hMonth = Math.floor((24*l)/709);
+  let hDay = l - Math.floor((709*hMonth)/24);
+  let hYear = 30*n + j - 30;
+  return {year:hYear, month:hMonth, day:hDay};
+}
+
+setInterval(updateClock, 1000);
+updateClock();
+
+// ===================== PRAYER TIMES =====================
+const PRAYER_NAMES = [
+  {key:'Fajr', ar:'الفجر', en:'Fajr'},
+  {key:'Sunrise', ar:'الشروق', en:'Sunrise'},
+  {key:'Dhuhr', ar:'الظهر', en:'Dhuhr'},
+  {key:'Asr', ar:'العصر', en:'Asr'},
+  {key:'Maghrib', ar:'المغرب', en:'Maghrib'},
+  {key:'Isha', ar:'العشاء', en:'Isha'},
+];
+
+async function fetchPrayerTimes() {
+  const city = document.getElementById('city-input').value.trim();
+  if (!city) return;
+  document.getElementById('prayer-cards').innerHTML = '<div class="loading-spinner">Fetching prayer times</div>';
+  try {
+    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=&method=2`);
+    const data = await res.json();
+    if (data.code === 200) renderPrayerTimes(data.data.timings);
+    else throw new Error('City not found');
+  } catch(e) {
+    document.getElementById('prayer-cards').innerHTML = '<div class="error-msg">Could not find prayer times. Try a different city name.</div>';
+  }
+}
+
+async function getLocationPrayer() {
+  if (!navigator.geolocation) return alert('Geolocation not supported');
+  document.getElementById('prayer-cards').innerHTML = '<div class="loading-spinner">Getting your location</div>';
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const {latitude:lat, longitude:lng} = pos.coords;
+    try {
+      const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=2`);
+      const data = await res.json();
+      renderPrayerTimes(data.data.timings);
+    } catch(e) {
+      document.getElementById('prayer-cards').innerHTML = '<div class="error-msg">Failed to fetch times.</div>';
+    }
+  }, () => {
+    document.getElementById('prayer-cards').innerHTML = '<div class="error-msg">Location access denied.</div>';
+  });
+}
+
+function renderPrayerTimes(timings) {
+  const now = new Date();
+  const currentMinutes = now.getHours()*60 + now.getMinutes();
+
+  // Find current prayer
+  let currentIdx = 0;
+  const prayerMinutes = PRAYER_NAMES.map(p => {
+    const t = timings[p.key];
+    if (!t) return 9999;
+    const [h,m] = t.split(':').map(Number);
+    return h*60+m;
+  });
+
+  for (let i=prayerMinutes.length-1; i>=0; i--) {
+    if (currentMinutes >= prayerMinutes[i]) { currentIdx = i; break; }
+  }
+
+  const html = PRAYER_NAMES.map((p, i) => {
+    const time = timings[p.key];
+    if (!time) return '';
+    const isCurrent = i === currentIdx;
+    return `<div class="prayer-item ${isCurrent?'current':''} fade-in">
+      <div>
+        <div class="prayer-name">${p.en}</div>
+      </div>
+      <div class="prayer-arabic">${p.ar}</div>
+      <div class="prayer-time">${formatTime12(time)}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('prayer-cards').innerHTML = '<div class="prayer-cards">'+html+'</div>';
+}
+
+function formatTime12(t) {
+  const [h,m] = t.split(':').map(Number);
+  const ampm = h>=12?'PM':'AM';
+  const h12 = h%12||12;
+  return `${h12}:${m.toString().padStart(2,'0')} ${ampm}`;
+}
+
+// ===================== QURAN =====================
+async function loadSurahList() {
+  try {
+    const res = await fetch('https://api.alquran.cloud/v1/surah');
+    const data = await res.json();
+    allSurahs = data.data;
+    renderSurahList(allSurahs);
+  } catch(e) {
+    document.getElementById('surah-list').innerHTML = '<div style="padding:16px;color:var(--text2);font-style:italic;text-align:center;">Failed to load. Check connection.</div>';
+  }
+}
+
+function renderSurahList(list) {
+  const html = list.map(s => `
+    <div class="surah-list-item" onclick="loadSurah(${s.number})" id="surah-item-${s.number}">
+      <div class="surah-num">${s.number}</div>
+      <div class="surah-info">
+        <div class="name-en">${s.englishName}</div>
+        <div class="name-ar">${s.name}</div>
+        <div class="meta">${s.numberOfAyahs} ayahs · ${s.revelationType}</div>
+      </div>
+    </div>`).join('');
+  document.getElementById('surah-list').innerHTML = html;
+}
+
+function filterSurahs(q) {
+  if (!q) { renderSurahList(allSurahs); return; }
+  const filtered = allSurahs.filter(s =>
+    s.englishName.toLowerCase().includes(q.toLowerCase()) ||
+    s.name.includes(q) ||
+    s.number.toString() === q
+  );
+  renderSurahList(filtered);
+}
+
+async function loadSurah(num) {
+  const reader = document.getElementById('quran-reader');
+  const readerContent = document.getElementById('quran-reader-content');
+  const listPanel = document.getElementById('surah-list-panel');
+
+  readerContent.innerHTML = '<div class="loading-spinner">Loading surah</div>';
+
+  // Mobile: slide to reader
+  const isMobile = window.innerWidth <= 700;
+  if (isMobile) {
+    listPanel.classList.add('slide-out');
+    reader.classList.add('slide-in');
+  }
+
+  document.querySelectorAll('.surah-list-item').forEach(e => e.classList.remove('active'));
+  const el = document.getElementById('surah-item-'+num);
+  if (el) el.classList.add('active');
+
+  try {
+    const [arRes, enRes] = await Promise.all([
+      fetch(`https://api.alquran.cloud/v1/surah/${num}`),
+      fetch(`https://api.alquran.cloud/v1/surah/${num}/en.asad`)
+    ]);
+    const arData = await arRes.json();
+    const enData = await enRes.json();
+
+    const surah = arData.data;
+    const enSurah = enData.data;
+    const showBismillah = num !== 1 && num !== 9;
+
+    let html = `<div class="surah-header fade-in">
+      <div class="ar-title">${surah.name}</div>
+      <div class="en-title">${surah.englishName} — ${surah.englishNameTranslation}</div>
+      <div class="surah-meta">${surah.numberOfAyahs} Ayahs · ${surah.revelationType}</div>
+    </div>`;
+
+    if (showBismillah) {
+      html += `<div class="bismillah-reader">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</div>`;
+    }
+
+    surah.ayahs.forEach((ayah, i) => {
+      const translation = enSurah.ayahs[i]?.text || '';
+      html += `<div class="ayah fade-in">
+        <div class="ayah-arabic">${ayah.text}<span class="ayah-num">${ayah.numberInSurah}</span></div>
+        <div class="ayah-translation">${translation}</div>
+      </div>`;
+    });
+
+    readerContent.innerHTML = html;
+    reader.scrollTop = 0;
+  } catch(e) {
+    readerContent.innerHTML = '<div class="error-msg">Failed to load surah. Please check your internet connection.</div>';
+  }
+}
+
+function quranGoBack() {
+  const reader = document.getElementById('quran-reader');
+  const listPanel = document.getElementById('surah-list-panel');
+  listPanel.classList.remove('slide-out');
+  reader.classList.remove('slide-in');
+}
+
+// ===================== QIBLA AR CAMERA =====================
+let qiblaStream = null;
+let qiblaAnimFrame = null;
+let qiblaAngle = null;      // Qibla bearing from North (degrees)
+let deviceHeading = null;   // Current compass heading
+
+function calcQibla(lat, lng) {
+  const MECCA_LAT = 21.3891;
+  const MECCA_LNG = 39.8579;
+  const φ1 = lat * Math.PI/180;
+  const φ2 = MECCA_LAT * Math.PI/180;
+  const Δλ = (MECCA_LNG - lng) * Math.PI/180;
+  const y = Math.sin(Δλ) * Math.cos(φ2);
+  const x = Math.cos(φ1)*Math.sin(φ2) - Math.sin(φ1)*Math.cos(φ2)*Math.cos(Δλ);
+  let bearing = Math.atan2(y, x) * 180/Math.PI;
+  return (bearing + 360) % 360;
+}
+
+async function startQiblaAR() {
+  const startEl = document.getElementById('qibla-start');
+  const arEl = document.getElementById('qibla-ar');
+  const errEl = document.getElementById('qibla-error');
+
+  startEl.style.display = 'none';
+  errEl.style.display = 'none';
+  arEl.style.display = 'block';
+  document.getElementById('ar-hud-text').textContent = 'Getting location...';
+
+  // 1. Get location
+  let lat, lng;
+  try {
+    const pos = await new Promise((res, rej) =>
+      navigator.geolocation.getCurrentPosition(res, rej, {enableHighAccuracy: true}));
+    lat = pos.coords.latitude;
+    lng = pos.coords.longitude;
+    qiblaAngle = calcQibla(lat, lng);
+    document.getElementById('ar-degree-val').textContent = Math.round(qiblaAngle) + '°';
+  } catch(e) {
+    showQiblaError('Location access denied. Please allow location.');
+    return;
+  }
+
+  // 2. Start camera (rear camera preferred)
+  try {
+    qiblaStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: { ideal: 'environment' }, width: { ideal: 1280 }, height: { ideal: 720 } },
+      audio: false
+    });
+    const video = document.getElementById('qibla-video');
+    video.srcObject = qiblaStream;
+    await video.play();
+  } catch(e) {
+    showQiblaError('Camera access denied. Please allow camera access.');
+    return;
+  }
+
+  // 3. Device orientation (compass)
+  const requestOrientation = () => {
+    if (typeof DeviceOrientationEvent !== 'undefined' &&
+        typeof DeviceOrientationEvent.requestPermission === 'function') {
+      DeviceOrientationEvent.requestPermission().then(state => {
+        if (state === 'granted') listenOrientation();
+        else document.getElementById('ar-hud-text').textContent = 'Compass permission denied — pan slowly!';
+      });
+    } else {
+      listenOrientation();
+    }
+  };
+
+  requestOrientation();
+
+  // 4. Start render loop
+  renderQiblaAR();
+}
+
+function listenOrientation() {
+  window.addEventListener('deviceorientationabsolute', handleOrientation, true);
+  window.addEventListener('deviceorientation', handleOrientation, true);
+}
+
+function handleOrientation(e) {
+  // alpha = compass heading (0=North on absolute, varies otherwise)
+  if (e.absolute && e.alpha !== null) {
+    deviceHeading = (360 - e.alpha) % 360;
+  } else if (e.webkitCompassHeading !== undefined) {
+    deviceHeading = e.webkitCompassHeading;
+  } else if (e.alpha !== null) {
+    deviceHeading = (360 - e.alpha) % 360;
+  }
+}
+
+function renderQiblaAR() {
+  const video = document.getElementById('qibla-video');
+  const canvas = document.getElementById('qibla-canvas');
+  const ctx = canvas.getContext('2d');
+
+  function draw() {
+    canvas.width = video.clientWidth * window.devicePixelRatio || video.clientWidth;
+    canvas.height = video.clientHeight * window.devicePixelRatio || video.clientHeight;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    const W = canvas.width, H = canvas.height;
+    const cx = W / 2, cy = H / 2;
+
+    if (qiblaAngle === null) {
+      qiblaAnimFrame = requestAnimationFrame(draw);
+      return;
+    }
+
+    // Calculate angle difference between qibla and where phone is facing
+    let diff = 0;
+    const hudEl = document.getElementById('ar-hud-text');
+
+    if (deviceHeading !== null) {
+      diff = qiblaAngle - deviceHeading;
+      // Normalize to -180..180
+      while (diff > 180) diff -= 360;
+      while (diff < -180) diff += 360;
+
+      const absDiff = Math.abs(diff);
+      const isAligned = absDiff < 15;
+
+      // Update HUD
+      if (isAligned) {
+        hudEl.textContent = '🕋 Qibla Direction — Face Here!';
+        hudEl.style.color = '#5daa82';
+        hudEl.style.borderColor = 'rgba(93,170,130,0.6)';
+      } else {
+        const dir = diff > 0 ? `Turn Right ${Math.round(absDiff)}°` : `Turn Left ${Math.round(absDiff)}°`;
+        hudEl.textContent = dir;
+        hudEl.style.color = 'var(--gold2)';
+        hudEl.style.borderColor = 'rgba(196,166,106,0.4)';
+      }
+
+      // Draw directional guide line
+      const angleRad = (diff) * Math.PI / 180;
+      const lineLen = Math.min(W, H) * 0.35;
+      const endX = cx + Math.sin(angleRad) * lineLen;
+      const endY = cy - Math.cos(angleRad) * lineLen;
+
+      // Gradient line
+      const grad = ctx.createLinearGradient(cx, cy, endX, endY);
+      grad.addColorStop(0, 'rgba(196,166,106,0)');
+      grad.addColorStop(1, isAligned ? 'rgba(93,170,130,0.9)' : 'rgba(196,166,106,0.8)');
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 3 * window.devicePixelRatio;
+      ctx.setLineDash([8 * window.devicePixelRatio, 6 * window.devicePixelRatio]);
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(endX, endY);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      if (isAligned) {
+        // Draw glowing green Kaaba
+        drawKaaba(ctx, cx, cy - lineLen * 0.6, Math.min(W,H) * 0.22, true);
+
+        // Glow ring
+        ctx.save();
+        ctx.globalAlpha = 0.3 + 0.1 * Math.sin(Date.now() / 300);
+        const glow = ctx.createRadialGradient(cx, cy - lineLen * 0.6, 0, cx, cy - lineLen * 0.6, Math.min(W,H) * 0.18);
+        glow.addColorStop(0, 'rgba(93,170,130,0.6)');
+        glow.addColorStop(1, 'rgba(93,170,130,0)');
+        ctx.fillStyle = glow;
+        ctx.beginPath();
+        ctx.arc(cx, cy - lineLen * 0.6, Math.min(W,H) * 0.18, 0, Math.PI*2);
+        ctx.fill();
+        ctx.restore();
+      } else {
+        // Draw arrow indicator at edge
+        const normDiff = diff / 180;
+        const arrowX = cx + Math.sin(angleRad) * (Math.min(W,H) * 0.42);
+        const arrowY = cy - Math.cos(angleRad) * (Math.min(W,H) * 0.42);
+        drawArrow(ctx, arrowX, arrowY, angleRad, isAligned);
+
+        // Small kaaba at center
+        drawKaaba(ctx, cx, cy, Math.min(W,H) * 0.1, false);
+      }
+    } else {
+      hudEl.textContent = 'Compass not available — pan your camera slowly';
+      // Just draw kaaba in center
+      drawKaaba(ctx, cx, cy, Math.min(W,H) * 0.15, false);
+    }
+
+    // Crosshair
+    drawCrosshair(ctx, cx, cy, W, H);
+
+    qiblaAnimFrame = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function drawKaaba(ctx, x, y, size, green) {
+  const s = size;
+  const color = green ? '#2d7a4f' : '#1a1a1a';
+  const borderColor = green ? '#5daa82' : '#c4a66a';
+  const goldColor = green ? '#7ed9a6' : '#e8c97a';
+
+  ctx.save();
+  ctx.translate(x, y);
+
+  // Shadow
+  ctx.shadowColor = green ? 'rgba(93,170,130,0.8)' : 'rgba(196,166,106,0.5)';
+  ctx.shadowBlur = s * 0.5;
+
+  // Main body
+  ctx.fillStyle = color;
+  ctx.strokeStyle = borderColor;
+  ctx.lineWidth = s * 0.04;
+  ctx.beginPath();
+  ctx.rect(-s*0.45, -s*0.4, s*0.9, s*0.8);
+  ctx.fill();
+  ctx.stroke();
+
+  // Kiswa drape (dark cloth with gold band)
+  ctx.fillStyle = green ? '#1a4d32' : '#0d0d0d';
+  ctx.fillRect(-s*0.45, -s*0.4, s*0.9, s*0.55);
+
+  // Gold band (Hizam)
+  ctx.fillStyle = goldColor;
+  ctx.fillRect(-s*0.45, -s*0.02, s*0.9, s*0.08);
+
+  // Arabic calligraphy band (simple lines)
+  ctx.fillStyle = color;
+  ctx.fillRect(-s*0.35, 0, s*0.2, s*0.05);
+  ctx.fillRect(-s*0.05, 0, s*0.2, s*0.05);
+  ctx.fillRect(s*0.15, 0, s*0.2, s*0.05);
+
+  // Door
+  ctx.fillStyle = goldColor;
+  ctx.fillRect(-s*0.1, s*0.2, s*0.2, s*0.2);
+  // Door arch
+  ctx.beginPath();
+  ctx.arc(-s*0.0, s*0.2, s*0.1, Math.PI, 0);
+  ctx.fill();
+
+  // Black stone corner mark
+  ctx.fillStyle = green ? '#3da06a' : '#333';
+  ctx.strokeStyle = goldColor;
+  ctx.lineWidth = s * 0.025;
+  ctx.beginPath();
+  ctx.arc(-s*0.45, s*0.05, s*0.07, 0, Math.PI*2);
+  ctx.fill();
+  ctx.stroke();
+
+  // Top structure
+  ctx.fillStyle = borderColor;
+  ctx.fillRect(-s*0.05, -s*0.5, s*0.1, s*0.12);
+
+  ctx.restore();
+}
+
+function drawArrow(ctx, x, y, angle, green) {
+  const size = 24 * (window.devicePixelRatio || 1);
+  ctx.save();
+  ctx.translate(x, y);
+  ctx.rotate(angle);
+  ctx.fillStyle = green ? '#5daa82' : '#e8c97a';
+  ctx.shadowColor = green ? 'rgba(93,170,130,0.8)' : 'rgba(196,166,106,0.6)';
+  ctx.shadowBlur = 12;
+  ctx.beginPath();
+  ctx.moveTo(0, -size);
+  ctx.lineTo(size*0.6, size*0.5);
+  ctx.lineTo(0, 0);
+  ctx.lineTo(-size*0.6, size*0.5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+function drawCrosshair(ctx, cx, cy, W, H) {
+  ctx.save();
+  ctx.strokeStyle = 'rgba(196,166,106,0.3)';
+  ctx.lineWidth = 1 * (window.devicePixelRatio || 1);
+  const s = Math.min(W,H) * 0.05;
+  // Four corners
+  [[-1,-1],[1,-1],[1,1],[-1,1]].forEach(([dx,dy]) => {
+    const x = cx + dx * s * 1.2, y = cy + dy * s * 1.2;
+    ctx.beginPath();
+    ctx.moveTo(x, cy + dy * s * 0.4);
+    ctx.lineTo(x, y);
+    ctx.lineTo(cx + dx * s * 0.4, y);
+    ctx.stroke();
+  });
+  ctx.restore();
+}
+
+function stopQiblaAR() {
+  if (qiblaStream) {
+    qiblaStream.getTracks().forEach(t => t.stop());
+    qiblaStream = null;
+  }
+  if (qiblaAnimFrame) {
+    cancelAnimationFrame(qiblaAnimFrame);
+    qiblaAnimFrame = null;
+  }
+  window.removeEventListener('deviceorientationabsolute', handleOrientation, true);
+  window.removeEventListener('deviceorientation', handleOrientation, true);
+  deviceHeading = null;
+  document.getElementById('qibla-ar').style.display = 'none';
+  document.getElementById('qibla-start').style.display = 'block';
+}
+
+function showQiblaError(msg) {
+  document.getElementById('qibla-ar').style.display = 'none';
+  document.getElementById('qibla-start').style.display = 'block';
+  const errEl = document.getElementById('qibla-error');
+  errEl.textContent = msg;
+  errEl.style.display = 'block';
+}
+
+// ===================== DHIKR =====================
+const DHIKRS = [
+  { ar: 'سُبْحَانَ اللَّهِ', meaning: 'Glory be to Allah', translit: 'Subhanallah', target: 33 },
+  { ar: 'الْحَمْدُ لِلَّهِ', meaning: 'All praise is due to Allah', translit: 'Alhamdulillah', target: 33 },
+  { ar: 'اللَّهُ أَكْبَرُ', meaning: 'Allah is the Greatest', translit: 'Allahu Akbar', target: 34 },
+  { ar: 'لَا إِلَٰهَ إِلَّا اللَّهُ', meaning: 'There is no god but Allah', translit: 'La ilaha illallah', target: 100 },
+  { ar: 'أَسْتَغْفِرُ اللَّهَ', meaning: 'I seek forgiveness from Allah', translit: 'Astaghfirullah', target: 100 },
+  { ar: 'صَلِّ اللَّهُمَّ عَلَى مُحَمَّدٍ', meaning: 'Blessings upon the Prophet', translit: 'Salawat', target: 100 },
+];
+
+function renderDhikr() {
+  const sel = document.getElementById('dhikr-selector');
+  if (sel.innerHTML) return;
+  sel.innerHTML = DHIKRS.map((d,i) => `
+    <button class="dhikr-btn ${i===0?'active':''}" onclick="selectDhikr(${i})" id="dhikr-tab-${i}">${d.translit}</button>
+  `).join('');
+}
+
+function selectDhikr(i) {
+  currentDhikrIdx = i;
+  dhikrCount = 0;
+  dhikrTarget = DHIKRS[i].target;
+  document.querySelectorAll('.dhikr-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('dhikr-tab-'+i).classList.add('active');
+  document.getElementById('dhikr-arabic').textContent = DHIKRS[i].ar;
+  document.getElementById('dhikr-meaning').textContent = DHIKRS[i].meaning;
+  document.getElementById('dhikr-translit').textContent = DHIKRS[i].translit;
+  updateDhikrDisplay();
+}
+
+function incrementDhikr() {
+  dhikrCount++;
+  totalToday++;
+  if (dhikrCount >= dhikrTarget) {
+    dhikrSessions++;
+    dhikrCount = 0;
+    // Flash effect
+    const c = document.getElementById('counter-circle');
+    c.style.boxShadow = '0 0 40px rgba(196,166,106,0.5)';
+    setTimeout(() => c.style.boxShadow = '', 600);
+  }
+  updateDhikrDisplay();
+}
+
+function updateDhikrDisplay() {
+  document.getElementById('dhikr-count').textContent = dhikrCount;
+  document.getElementById('dhikr-target').textContent = `/ ${dhikrTarget}`;
+  document.getElementById('total-today').textContent = totalToday + (dhikrSessions > 0 ? ` (${dhikrSessions} complete sets)` : '');
+  const pct = dhikrCount / dhikrTarget;
+  const circumference = 565;
+  const offset = circumference * (1 - pct);
+  document.getElementById('progress-circle').style.strokeDashoffset = offset;
+}
+
+function resetDhikr() {
+  dhikrCount = 0;
+  updateDhikrDisplay();
+}
+
+function setTarget() {
+  const t = prompt('Set target count:', dhikrTarget);
+  if (t && !isNaN(t) && +t > 0) {
+    dhikrTarget = +t;
+    updateDhikrDisplay();
+  }
+}
+
+// ===================== DUAS =====================
+const DUAS_DATA = {
+  Morning: [
+    { title: 'Morning Remembrance', ar: 'أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ', trans: 'We have entered a new morning and with it all dominion belongs to Allah. Praise be to Allah, there is no god but Allah alone with no partner.', source: 'Muslim' },
+    { title: 'Morning Protection', ar: 'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا وَبِكَ نَحْيَا وَبِكَ نَمُوتُ وَإِلَيْكَ الْمَصِيرُ', trans: 'O Allah, by You we enter the morning and by You we enter the evening, by You we live and by You we die, and to You is the return.', source: 'Abu Dawud, Tirmidhi' },
+  ],
+  Evening: [
+    { title: 'Evening Remembrance', ar: 'أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ وَالْحَمْدُ لِلَّهِ لَا إِلَٰهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ', trans: 'We have entered the evening and the whole kingdom of Allah has entered the evening. Praise be to Allah, none has the right to be worshipped except Allah alone.', source: 'Muslim' },
+    { title: 'Evening Seeking Forgiveness', ar: 'أَسْتَغْفِرُ اللَّهَ الْعَظِيمَ الَّذِي لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ وَأَتُوبُ إِلَيْهِ', trans: 'I seek forgiveness from Allah the Great, there is no god but He, the Ever-Living, the Sustainer, and I repent to Him.', source: 'Abu Dawud, Tirmidhi' },
+  ],
+  Sleep: [
+    { title: 'Before Sleeping', ar: 'بِاسْمِكَ اللَّهُمَّ أَمُوتُ وَأَحْيَا', trans: 'In Your name, O Allah, I die and I live.', source: 'Bukhari' },
+    { title: 'Al-Kafirun before Sleep', ar: 'قُلْ يَٰٓأَيُّهَا ٱلْكَٰفِرُونَ', trans: 'Recite Surah Al-Kafirun before sleeping — it is a protection from shirk.', source: 'Abu Dawud' },
+    { title: 'Seeking Refuge in Sleep', ar: 'اللَّهُمَّ قِنِي عَذَابَكَ يَوْمَ تَبْعَثُ عِبَادَكَ', trans: 'O Allah, protect me from Your punishment on the Day You resurrect Your servants.', source: 'Abu Dawud, Tirmidhi' },
+  ],
+  Food: [
+    { title: 'Before Eating', ar: 'بِسْمِ اللَّهِ', trans: 'In the name of Allah.', source: 'Bukhari, Muslim' },
+    { title: 'After Eating', ar: 'الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا وَجَعَلَنَا مُسْلِمِينَ', trans: 'All praise is to Allah Who fed us and gave us drink and made us Muslims.', source: 'Abu Dawud, Tirmidhi' },
+    { title: 'Forgotten Bismillah', ar: 'بِسْمِ اللَّهِ أَوَّلَهُ وَآخِرَهُ', trans: 'In the name of Allah at its beginning and at its end.', source: 'Abu Dawud' },
+  ],
+  Travel: [
+    { title: 'Dua for Travel', ar: 'اللَّهُمَّ إِنَّا نَسْأَلُكَ فِي سَفَرِنَا هَذَا الْبِرَّ وَالتَّقْوَى وَمِنَ الْعَمَلِ مَا تَرْضَى', trans: 'O Allah, we ask You during this journey of ours for righteousness, piety and deeds that please You.', source: 'Muslim' },
+    { title: 'Riding/Entering Vehicle', ar: 'سُبْحَانَ الَّذِي سَخَّرَ لَنَا هَٰذَا وَمَا كُنَّا لَهُ مُقْرِنِينَ وَإِنَّا إِلَىٰ رَبِّنَا لَمُنْقَلِبُونَ', trans: 'Glory be to Him who has subjected this for us, and we could not have otherwise mastered it. And to our Lord we are surely to return.', source: 'Abu Dawud, Tirmidhi (Quran 43:13-14)' },
+  ],
+  Distress: [
+    { title: 'In Times of Anxiety', ar: 'اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنَ الْهَمِّ وَالْحَزَنِ وَالْعَجْزِ وَالْكَسَلِ', trans: 'O Allah, I seek refuge in You from worry and grief, from incapacity and laziness.', source: 'Bukhari' },
+    { title: 'Dua of Prophet Yunus', ar: 'لَّا إِلَٰهَ إِلَّا أَنتَ سُبْحَانَكَ إِنِّي كُنتُ مِنَ الظَّالِمِينَ', trans: 'There is no deity except You; exalted are You. Indeed, I have been of the wrongdoers.', source: 'Quran 21:87' },
+    { title: 'Relief from Hardship', ar: 'حَسْبُنَا اللَّهُ وَنِعْمَ الْوَكِيلُ', trans: 'Sufficient for us is Allah, and He is the best disposer of affairs.', source: 'Quran 3:173 / Bukhari' },
+  ],
+  Quran: [
+    { title: 'Before Reciting Quran', ar: 'أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ', trans: 'I seek refuge in Allah from the accursed Satan.', source: 'Quran 16:98' },
+    { title: 'Ayat al-Kursi', ar: 'اللَّهُ لَا إِلَٰهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ ۚ لَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ', trans: 'Allah — there is no deity except Him, the Ever-Living, the Sustainer of existence. Neither drowsiness overtakes Him nor sleep.', source: 'Quran 2:255' },
+    { title: 'Al-Fatiha', ar: 'ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ مَٰلِكِ يَوْمِ ٱلدِّينِ', trans: 'Praise be to Allah, Lord of all the worlds, the Entirely Merciful, the Especially Merciful, Master of the Day of Judgment.', source: 'Quran 1:2-4' },
+  ],
+};
+
+let currentCat = 'Morning';
+
+function renderDuas() {
+  const catEl = document.getElementById('duas-cats');
+  if (!catEl.innerHTML) {
+    catEl.innerHTML = Object.keys(DUAS_DATA).map(cat =>
+      `<button class="cat-btn ${cat===currentCat?'active':''}" onclick="selectDuaCat('${cat}')" id="cat-${cat}">${cat}</button>`
+    ).join('');
+  }
+  showDuaCategory(currentCat);
+}
+
+function selectDuaCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('cat-'+cat).classList.add('active');
+  showDuaCategory(cat);
+}
+
+function showDuaCategory(cat) {
+  const duas = DUAS_DATA[cat];
+  document.getElementById('duas-list').innerHTML = duas.map(d => `
+    <div class="dua-card fade-in">
+      <div class="dua-title">${d.title}</div>
+      <div class="dua-arabic">${d.ar}</div>
+      <div class="dua-trans">${d.trans}</div>
+      <div class="dua-source">📚 ${d.source}</div>
+    </div>`).join('');
+}
+
+// Init dhikr display
+updateDhikrDisplay();
+</script>
+</body>
+</html>
