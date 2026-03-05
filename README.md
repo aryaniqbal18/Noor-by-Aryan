@@ -2,7 +2,7 @@
 
 Noor is a modern and elegant Islamic companion web application designed to assist Muslims in their daily worship and spiritual routines.
 
-The app provides essential Islamic tools in one simple interface, including prayer times, Quran reading with translation, Qibla direction finder, dhikr counter, and a collection of authentic daily duas.
+The site provides essential Islamic tools in one simple interface, including prayer times, Quran reading with translation, Qibla direction finder, dhikr counter, and a collection of authentic daily duas.
 
 Features include:
 
