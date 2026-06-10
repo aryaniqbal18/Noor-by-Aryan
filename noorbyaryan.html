@@ -784,6 +784,7 @@
     <li><button onclick="showPage('qibla')" id="nav-qibla">Qibla</button></li>
     <li><button onclick="showPage('dhikr')" id="nav-dhikr">Dhikr</button></li>
     <li><button onclick="showPage('duas')" id="nav-duas">Duas</button></li>
+    <li><button onclick="showPage('ai')" id="nav-ai">Noor AI</button></li>
   </ul>
 </nav>
 
@@ -823,6 +824,11 @@
       <div class="icon">🤲</div>
       <h3>Duas</h3>
       <p>Authentic supplications for daily life</p>
+    </div>
+    <div class="home-card" onclick="showPage('ai')">
+     <div class="icon">🤖</div>
+     <h3>Noor AI</h3>
+     <p>Ask authentic Islamic questions</p>
     </div>
   </div>
 </section>
@@ -996,6 +1002,47 @@
   <div id="duas-list"></div>
 </section>
 
+<!-- NOOR AI -->
+<section class="page" id="ai">
+  <div class="page-header">
+    <h2>Noor AI</h2>
+    <p>Powered by Quran & Authentic Hadith</p>
+  </div>
+
+  <div style="max-width:800px;margin:auto;padding:20px;">
+    
+    <div id="chat-box"
+      style="
+      height:400px;
+      overflow-y:auto;
+      background:#161d26;
+      border:1px solid rgba(196,166,106,0.2);
+      border-radius:12px;
+      padding:15px;
+      margin-bottom:15px;">
+    </div>
+
+    <div style="display:flex;gap:10px;">
+      <input
+        id="user-question"
+        type="text"
+        placeholder="Ask an Islamic question..."
+        style="
+        flex:1;
+        padding:12px;
+        border-radius:8px;
+        border:none;">
+      
+      <button
+        class="btn-gold"
+        onclick="askNoorAI()">
+        Ask
+      </button>
+    </div>
+
+  </div>
+</section>
+
 </main>
 
 <!-- FOOTER -->
@@ -1044,7 +1091,7 @@ function showPage(id) {
 function updateClock() {
   const now = new Date();
   document.getElementById('clock').textContent =
-    now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    now.toLocaleTimeString('en-US', {hour:'2-digit',minute:'2-digit'});
   document.getElementById('greg-date').textContent =
     now.toLocaleDateString('en-US', {weekday:'long',year:'numeric',month:'long',day:'numeric'});
 
@@ -1089,7 +1136,7 @@ async function fetchPrayerTimes() {
   if (!city) return;
   document.getElementById('prayer-cards').innerHTML = '<div class="loading-spinner">Fetching prayer times</div>';
   try {
-    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=India&method=1&school=0&latitudeAdjustmentMethod=ANGLE_BASED&timezonestring=Asia/Kolkata`);
+    const res = await fetch(`https://api.aladhan.com/v1/timingsByCity?city=${encodeURIComponent(city)}&country=&method=2`);
     const data = await res.json();
     if (data.code === 200) renderPrayerTimes(data.data.timings);
     else throw new Error('City not found');
@@ -1098,52 +1145,22 @@ async function fetchPrayerTimes() {
   }
 }
 
-async function getLocationPrayer(){
-  if(!navigator.geolocation){
-    alert("Your browser does not support location.");
-    return;
-  }
-  document.getElementById('prayer-cards').innerHTML=
-  '<div class="loading-spinner">Getting your location</div>';
-  navigator.geolocation.getCurrentPosition(
-    async function(pos){
-      const lat=pos.coords.latitude;
-      const lng=pos.coords.longitude;
-      
-      try{
-        const res=await fetch(
-          `https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=1&school=0&latitudeAdjustmentMethod=ANGLE_BASED&timezonestring=Asia/Kolkata`
-          );
-
-          const data=await res.json();
-          renderPrayerTimes(data.data.timings);
-        }catch(e){
-          document.getElementById('prayer-cards').innerHTML=
-          '<div class="error-msg">Could not fetch prayer times.</div>';
-        }
-      } ,
-      function(error){
-        let message="Location access denied.";
-
-        if(error.code===1){
-          message="Please allow location access in your browser.";
-        }
-        if(error.code===2){
-          message="Location unavailable. Try again.";
-        }
-        if(error.code===3){
-          message="Location request timed out.";
-        }
-        document.getElementById('prayer-cards').innerHTML=
-        `<div class="error-msg">${message}</div>`;
-      },
-      {
-        enableHighAccuracy:true,
-        timeout:15000,
-        maximumAge:0
-      }
-      );
+async function getLocationPrayer() {
+  if (!navigator.geolocation) return alert('Geolocation not supported');
+  document.getElementById('prayer-cards').innerHTML = '<div class="loading-spinner">Getting your location</div>';
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const {latitude:lat, longitude:lng} = pos.coords;
+    try {
+      const res = await fetch(`https://api.aladhan.com/v1/timings?latitude=${lat}&longitude=${lng}&method=2`);
+      const data = await res.json();
+      renderPrayerTimes(data.data.timings);
+    } catch(e) {
+      document.getElementById('prayer-cards').innerHTML = '<div class="error-msg">Failed to fetch times.</div>';
     }
+  }, () => {
+    document.getElementById('prayer-cards').innerHTML = '<div class="error-msg">Location access denied.</div>';
+  });
+}
 
 function renderPrayerTimes(timings) {
   const now = new Date();
@@ -1726,6 +1743,57 @@ function showDuaCategory(cat) {
     </div>`).join('');
 }
 
+// ===================== NOOR AI (Q&A) =====================
+async function askNoorAI() {
+
+  const input = document.getElementById("user-question");
+  const question = input.value.trim();
+
+  if(!question) return;
+
+  const chat = document.getElementById("chat-box");
+
+  chat.innerHTML += `
+    <div style="margin-bottom:10px;">
+      <strong>You:</strong> ${question}
+    </div>
+  `;
+
+  input.value = "";
+
+  try {
+
+    const response = await fetch(
+      "YOUR_BACKEND_API_URL",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type":"application/json"
+        },
+        body: JSON.stringify({
+          question: question
+        })
+      }
+    );
+
+    const data = await response.json();
+
+    chat.innerHTML += `
+      <div style="margin-bottom:15px;">
+        <strong>Noor AI:</strong><br>
+        ${data.answer}
+      </div>
+    `;
+
+  } catch(err) {
+
+    chat.innerHTML += `
+      <div>
+        Unable to fetch answer.
+      </div>
+    `;
+  }
+}
 // Init dhikr display
 updateDhikrDisplay();
 </script>
