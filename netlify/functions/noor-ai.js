@@ -38,10 +38,16 @@ Question: ${question}`
       })
     };
   } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({
-        answer: "Server error."
+
+  return {
+
+    statusCode: 500,
+
+    body: JSON.stringify({
+
+      answer: err.message,
+
+      error: String(err)
       })
     };
   }
