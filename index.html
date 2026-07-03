@@ -771,6 +771,33 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
   .fade-in { animation: fadeUp 0.4s ease both; }
+  .loading-dots span{
+    display:inline-block;
+    animation: blink 1.4s infinite;
+    font-size:20px;
+    font-weight:bold;
+}
+
+.loading-dots span:nth-child(2){
+    animation-delay:.2s;
+}
+
+.loading-dots span:nth-child(3){
+    animation-delay:.4s;
+}
+
+.loading-dots span:nth-child(4){
+    animation-delay:.6s;
+}
+
+@keyframes blink{
+    0%,80%,100%{
+        opacity:.2;
+    }
+    40%{
+        opacity:1;
+    }
+}
 </style>
 </head>
 <body>
@@ -1761,6 +1788,33 @@ async function askNoorAI() {
 
   input.value = "";
 
+  const loadingId = "loading-" + Date.now();
+
+chat.innerHTML += `
+<div id="${loadingId}" style="
+    margin-bottom:15px;
+    padding:12px;
+    border-left:3px solid #00c853;
+    background:#1b1b1b;
+    color:#fff;
+    border-radius:8px;
+">
+<strong>🌙 Noor AI</strong><br><br>
+
+<span style="color:#7CFC00;font-weight:bold;">
+Allah is the Greatest
+</span>
+
+<br><br>
+
+<span class="loading-dots">
+Generating response
+<span>.</span><span>.</span><span>.</span>
+</span>
+
+</div>
+`;
+
   try {
 
     const response = await fetch(
@@ -1786,12 +1840,19 @@ async function askNoorAI() {
     `;
 
   } catch(err) {
-
-    chat.innerHTML += `
-      <div>
-        Unable to fetch answer.
-      </div>
-    `;
+document.getElementById(loadingId).outerHTML = `
+<div style="
+    margin-bottom:15px;
+    padding:12px;
+    border-left:3px solid red;
+    background:#2a1b1b;
+    color:white;
+    border-radius:8px;
+">
+<strong>❌ Noor AI</strong><br><br>
+Unable to fetch answer.
+</div>
+`;
   }
 }
 // Init dhikr display
