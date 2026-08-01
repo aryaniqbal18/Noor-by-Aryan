@@ -1144,6 +1144,10 @@ function showPage(id) {
   document.getElementById(id).classList.add('active');
   document.getElementById('nav-'+id).classList.add('active');
   currentPage = id;
+  window.scrollTo({
+  top: 0,
+  behavior: "smooth"
+});
 
   if (currentPage !== 'qibla' && qiblaStream) stopQiblaAR();
   if (id === 'quran' && allSurahs.length === 0) loadSurahList();
