@@ -771,33 +771,6 @@
   ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
   .fade-in { animation: fadeUp 0.4s ease both; }
-  .loading-dots span{
-    display:inline-block;
-    animation: blink 1.4s infinite;
-    font-size:20px;
-    font-weight:bold;
-}
-
-.loading-dots span:nth-child(2){
-    animation-delay:.2s;
-}
-
-.loading-dots span:nth-child(3){
-    animation-delay:.4s;
-}
-
-.loading-dots span:nth-child(4){
-    animation-delay:.6s;
-}
-
-@keyframes blink{
-    0%,80%,100%{
-        opacity:.2;
-    }
-    40%{
-        opacity:1;
-    }
-}
 </style>
 </head>
 <body>
@@ -812,6 +785,7 @@
     <li><button onclick="showPage('dhikr')" id="nav-dhikr">Dhikr</button></li>
     <li><button onclick="showPage('duas')" id="nav-duas">Duas</button></li>
     <li><button onclick="showPage('ai')" id="nav-ai">Noor AI</button></li>
+    <li><button onclick="showPage('privacy')" id="nav-privacy">Privacy</button></li>
   </ul>
 </nav>
 
@@ -1070,6 +1044,55 @@
   </div>
 </section>
 
+<!-- PRIVACY POLICY -->
+<section class="page" id="privacy">
+
+  <div class="page-header">
+    <h2>Privacy Policy</h2>
+    <p>Your privacy matters.</p>
+  </div>
+
+  <div style="max-width:900px;margin:auto;padding:30px;line-height:1.8;">
+
+    <h3 style="color:var(--gold);">Information We Collect</h3>
+    <p>
+      Noor may collect questions submitted to the AI assistant,
+      anonymous usage data, browser information and technical information.
+    </p>
+
+    <h3 style="color:var(--gold);margin-top:25px;">How We Use Your Information</h3>
+    <p>
+      We use this information to improve Noor,
+      provide AI responses,
+      improve security,
+      and enhance user experience.
+    </p>
+
+    <h3 style="color:var(--gold);margin-top:25px;">AI Responses</h3>
+    <p>
+      Noor AI uses artificial intelligence to generate answers.
+      Responses may occasionally be inaccurate.
+      Always verify important Islamic matters with authentic scholars.
+    </p>
+
+    <h3 style="color:var(--gold);margin-top:25px;">Contact</h3>
+
+<p>
+  If you have any questions, suggestions, or concerns regarding Noor or this Privacy Policy, feel free to contact us at:
+</p>
+
+<p style="margin-top:12px;">
+  📧
+  <a href="mailto:aryanikbalgts@gmail.com"
+     style="color:var(--gold2);text-decoration:none;font-weight:bold;">
+     aryanikbalgts@gmail.com
+  </a>
+</p>
+
+  </div>
+
+</section>
+
 </main>
 
 <!-- FOOTER -->
@@ -1081,11 +1104,25 @@
   position:relative;
   z-index:1;
 ">
-  <div style="font-family:var(--arabic);font-size:1.3rem;color:var(--gold);margin-bottom:6px;">بِسْمِ اللَّهِ</div>
+  <div style="font-family:var(--arabic);font-size:1.3rem;color:var(--gold);margin-bottom:6px;">
+    بِسْمِ اللَّهِ
+  </div>
+
   <div style="font-family:var(--body);font-style:italic;color:var(--text3);font-size:0.9rem;">
     Created with <span style="color:#e05555;">♥</span> love by
-    <span style="font-family:var(--display);color:var(--gold2);letter-spacing:0.08em;font-size:0.95rem;"> Aryan Iqbal</span>
+    <span style="font-family:var(--display);color:var(--gold2);letter-spacing:0.08em;font-size:0.95rem;">
+      Aryan Iqbal
+    </span>
   </div>
+
+  <div style="margin-top:18px;">
+    <a href="#"
+       onclick="showPage('privacy')"
+       style="color:var(--gold);text-decoration:none;font-family:var(--display);letter-spacing:0.08em;">
+      Privacy Policy
+    </a>
+  </div>
+
 </footer>
 
 <script>
@@ -1788,34 +1825,6 @@ async function askNoorAI() {
 
   input.value = "";
 
-  const loadingId = "loading-" + Date.now();
-
-chat.innerHTML += `
-<div id="${loadingId}" style="
-    margin-bottom:15px;
-    padding:12px;
-    border-left:3px solid #00c853;
-    background:#1b1b1b;
-    color:#fff;
-    border-radius:8px;
-">
-<strong>🌙 Noor AI</strong><br><br>
-
-<span style="color:#7CFC00;font-weight:bold;">
-بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ <br> 
-Allah is the Greatest
-</span>
-
-<br><br>
-
-<span class="loading-dots">
-Generating response
-<span>.</span><span>.</span><span>.</span>
-</span>
-
-</div>
-`;
-
   try {
 
     const response = await fetch(
@@ -1841,19 +1850,12 @@ Generating response
     `;
 
   } catch(err) {
-document.getElementById(loadingId).outerHTML = `
-<div style="
-    margin-bottom:15px;
-    padding:12px;
-    border-left:3px solid red;
-    background:#2a1b1b;
-    color:white;
-    border-radius:8px;
-">
-<strong>❌ Noor AI</strong><br><br>
-Unable to fetch answer.
-</div>
-`;
+
+    chat.innerHTML += `
+      <div>
+        Unable to fetch answer.
+      </div>
+    `;
   }
 }
 // Init dhikr display
