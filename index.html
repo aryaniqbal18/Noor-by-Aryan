@@ -1817,7 +1817,7 @@ async function askNoorAI() {
   const input = document.getElementById("user-question");
   const question = input.value.trim();
 
-  if (!question) return;
+  if(!question) return;
 
   const chat = document.getElementById("chat-box");
 
@@ -1831,16 +1831,18 @@ async function askNoorAI() {
 
   try {
 
-    // Get AI answer
-    const response = await fetch("/.netlify/functions/noor-ai", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        question: question
-      })
-    });
+    const response = await fetch(
+  "/.netlify/functions/noor-ai",
+  {
+    method: "POST",
+    headers: {
+      "Content-Type":"application/json"
+    },
+    body: JSON.stringify({
+      question: question
+    })
+  }
+);
 
     const data = await response.json();
 
@@ -1851,33 +1853,10 @@ async function askNoorAI() {
       </div>
     `;
 
-    chat.scrollTop = chat.scrollHeight;
-
-    // Convert answer to speech
-    const voiceResponse = await fetch("/.netlify/functions/noor-voice", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        text: data.answer
-      })
-    });
-
-    if (voiceResponse.ok) {
-      const audioBlob = await voiceResponse.blob();
-      const audio = new Audio(URL.createObjectURL(audioBlob));
-      audio.play();
-    } else {
-      console.error("Voice generation failed.");
-    }
-
-  } catch (err) {
-
-    console.error(err);
+  } catch(err) {
 
     chat.innerHTML += `
-      <div style="margin-bottom:15px;">
+      <div>
         Unable to fetch answer.
       </div>
     `;
